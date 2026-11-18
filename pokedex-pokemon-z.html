@@ -132,7 +132,7 @@ tr.desc td{font-size:13px;color:var(--muted);background:var(--soft)}
 .btn{display:block;border:1px solid var(--line);background:var(--soft);border-radius:6px;padding:8px 10px;cursor:pointer;font-weight:600;font-size:14px;text-align:center}
 .btn.pri{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
 .btn[aria-pressed="true"]{border-color:var(--accent);color:var(--accent)}
-.bpane{padding:12px;display:grid;gap:10px;align-content:start;overflow:auto;flex:1}
+.bpane{padding:12px;display:grid;grid-auto-rows:max-content;gap:10px;align-content:start;overflow:auto;flex:1}
 .prev{position:relative;line-height:0;background:#000;border-radius:6px;overflow:hidden;touch-action:none;user-select:none}
 .prev canvas{width:100%;height:auto}
 .prev.cal{cursor:crosshair;outline:2px solid var(--accent)}
@@ -613,7 +613,7 @@ window.addEventListener("paste", e => {
 $("bcal").addEventListener("click", () => { B.cal = !B.cal && !!B.src; if (!B.src) setBStatus("Primero empieza la captura o carga una imagen"); else updateControls(); });
 (function(){
   const pv = $("bprev"); let start = null, saved = null;
-  const rel = e => { const r = pv.getBoundingClientRect(); return [Math.max(0, Math.min(1, (e.clientX-r.left)/r.width)), Math.max(0, Math.min(1, (e.clientY-r.top)/r.height))]; };
+  const rel = e => { const r = $("bview").getBoundingClientRect(); return [Math.max(0, Math.min(1, (e.clientX-r.left)/r.width)), Math.max(0, Math.min(1, (e.clientY-r.top)/r.height))]; };
   const rect = (a, b) => ({x: Math.min(a[0],b[0]), y: Math.min(a[1],b[1]), w: Math.abs(a[0]-b[0]), h: Math.abs(a[1]-b[1])});
   pv.addEventListener("pointerdown", e => { if (!B.cal) return; start = rel(e); saved = B.roi; pv.setPointerCapture(e.pointerId); });
   pv.addEventListener("pointermove", e => { if (!start) return; B.roi = rect(start, rel(e)); updateControls(); });
